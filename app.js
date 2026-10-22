@@ -11,8 +11,19 @@ const ba = document.getElementById('ba');
 if (ba) {
   const range = ba.querySelector('.ba__range');
   const set = v => ba.style.setProperty('--pos', v + '%');
-  range.addEventListener('input', () => set(range.value));
+  range.addEventListener('input', () => { ba.classList.remove('is-hint'); set(range.value); });
   set(range.value);
+  // один раз показываем, что шторку можно двигать
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      ba.classList.add('is-hint');
+      ba.addEventListener('animationend', () => ba.classList.remove('is-hint'), { once: true });
+      io.disconnect();
+    }, { threshold: .6 });
+    io.observe(ba);
+  }
 }
 
 // Липкая кнопка на телефоне: появляется после первого экрана и прячется у тарифов

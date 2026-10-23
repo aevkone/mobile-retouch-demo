@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/logo.svg">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,7 +18,10 @@
 
 <header class="top">
   <div class="wrap top__in">
-    <a class="logo" href="#">Мобильная ретушь<span>курс Дарьи</span></a>
+    <a class="logo" href="#" aria-label="Мобильная ретушь — курс Дарьи">
+      <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#1f1915"/><rect x="19" y="10" width="26" height="44" rx="7" fill="none" stroke="#f7f1ea" stroke-width="3"/><circle cx="32" cy="30" r="9" fill="none" stroke="#f7f1ea" stroke-width="3"/><path class="logo__half" d="M32 21a9 9 0 0 1 0 18z" fill="#d7998f"/><rect x="28" y="46" width="8" height="3" rx="1.5" fill="#f7f1ea"/></svg>
+      <span class="logo__word"><span>Мобильная <em>ретушь</em></span><small>курс Дарьи</small></span>
+    </a>
     <nav class="top__nav" aria-label="Разделы">
       <a href="#program">Программа</a>
       <a href="#author">Об авторе</a>
@@ -40,9 +45,15 @@
         </div>
         <p class="hero__meta">6 модулей · 28 коротких уроков · с экрана моего телефона · рассрочка на все тарифы</p>
       </div>
-      <figure class="hero__photo" aria-label="Пример обработанного кадра">
-        <div class="scene scene--after" role="img" aria-label="Вечерний кадр в ресторане после обработки"></div>
-        <figcaption>Снято на телефон вечером в ресторане. Обработано за 10 минут.</figcaption>
+      <figure class="hero__photo" aria-label="Пример кадра до и после обработки">
+        <div class="develop" id="develop">
+          <img class="develop__before" src="img/hero.jpg" alt="" width="1000" height="1500" fetchpriority="high">
+          <img class="develop__after" src="img/hero.jpg" alt="Ужин при свечах: кадр после обработки" width="1000" height="1500" fetchpriority="high">
+          <span class="develop__line" aria-hidden="true"></span>
+          <span class="develop__tag develop__tag--l" aria-hidden="true">до</span>
+          <span class="develop__tag develop__tag--r" aria-hidden="true">после</span>
+        </div>
+        <figcaption>Фото для демо. Здесь будет реальный кадр Дарьи «до/после».</figcaption>
       </figure>
     </div>
   </section>
@@ -79,8 +90,8 @@
       </div>
       <div>
         <div class="ba" id="ba">
-          <div class="scene scene--after" aria-hidden="true"></div>
-          <div class="ba__before" aria-hidden="true"><div class="scene scene--before"></div></div>
+          <img class="ba__img" src="img/compare.jpg" alt="" width="1400" height="933" loading="lazy">
+          <div class="ba__before" aria-hidden="true"><img class="ba__img ba__img--before" src="img/compare.jpg" alt="" width="1400" height="933" loading="lazy"></div>
           <span class="ba__tag ba__tag--l">До</span>
           <span class="ba__tag ba__tag--r">После</span>
           <div class="ba__handle" aria-hidden="true"></div>
@@ -95,7 +106,7 @@
   <section class="apps">
     <div class="wrap">
       <h2>4 приложения — и ты больше не ищешь, кто тебя обработает</h2>
-      <ol class="apps__list">
+      <ol class="apps__list" data-reveal>
         <li><b>Lightroom</b><span>Свет и цвет. Спасаем тёмные кадры, убираем «зерно», делаем кожу живой.</span></li>
         <li><b>Facetune</b><span>Лицо и детали. Аккуратная кожа без «пластика», свет в глазах.</span></li>
         <li><b>FaceApp</b><span>Тон лица и тела. Чтобы шея и лицо были одного цвета.</span></li>
@@ -159,10 +170,10 @@
     <div class="wrap">
       <h2>Как ты поймёшь, что получается</h2>
       <p class="lead">В курсе нет куратора — зато ты не проверяешь себя вслепую. К каждому заданию есть всё, чтобы сравнить.</p>
-      <ol class="check__list">
-        <li><b>Мой «до/после» на таком же кадре.</b><span>Кладёшь рядом со своим и видишь разницу.</span></li>
-        <li><b>Чек-лист из 4–6 вопросов.</b><span>Например: «Кожа осталась с текстурой?», «Шея и лицо одного тона?». Все «да» — значит, получилось.</span></li>
-        <li><b>Урок «Частые ошибки».</b><span>Показываю, где обычно перебарщивают и как это поправить.</span></li>
+      <ol class="check__list" data-reveal>
+        <li><svg class="check__tick" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20"/><path d="M13 22.5l6 6 12-13"/></svg><b>Мой «до/после» на таком же кадре.</b><span>Кладёшь рядом со своим и видишь разницу.</span></li>
+        <li><svg class="check__tick" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20"/><path d="M13 22.5l6 6 12-13"/></svg><b>Чек-лист из 4–6 вопросов.</b><span>Например: «Кожа осталась с текстурой?», «Шея и лицо одного тона?». Все «да» — значит, получилось.</span></li>
+        <li><svg class="check__tick" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20"/><path d="M13 22.5l6 6 12-13"/></svg><b>Урок «Частые ошибки».</b><span>Показываю, где обычно перебарщивают и как это поправить.</span></li>
       </ol>
       <p class="note">Застряла с доступом или оплатой — напиши, ответит команда (контакты внизу, в разделе «Вопросы»).</p>
     </div>
@@ -203,8 +214,8 @@
   <section class="author" id="author">
     <div class="wrap author__in">
       <div class="author__media">
-        <div class="author__photo" role="img" aria-label="Место для фото Дарьи"><span>Фото Дарьи<br>из студийной съёмки</span></div>
-        <div class="author__video" role="img" aria-label="Место для видео-приветствия"><span>Видео 30–60 сек: Дарья показывает урок с экрана</span></div>
+        <figure class="author__photo"><img src="img/author.jpg" alt="Девушка с телефоном в кафе — фото для демо" width="900" height="1350" loading="lazy"><figcaption>фото для демо</figcaption></figure>
+        <figure class="author__video"><img src="img/lesson.jpg" alt="Съёмка блюда на телефон — фото для демо" width="1100" height="733" loading="lazy"><span class="author__play" aria-hidden="true"></span><figcaption>Здесь будет видео-приветствие Дарьи, 30–60 сек</figcaption></figure>
       </div>
       <div>
         <h2>Привет, я Дарья</h2>

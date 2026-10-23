@@ -49,8 +49,13 @@ a:not(.btn){text-underline-offset:.2em;text-decoration-thickness:1px}
 /* Шапка */
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top__in{display:flex;align-items:center;gap:24px;height:68px}
-.logo{font-family:var(--serif);font-size:24px;font-weight:600;text-decoration:none;display:flex;flex-direction:column;line-height:1}
-.logo span{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-top:4px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.logo__mark{width:42px;height:42px;flex:none;border-radius:12px;box-shadow:0 6px 14px -8px rgba(31,25,21,.6)}
+.logo__half{transform-origin:32px 30px;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+@media (hover:hover){.logo:hover .logo__half{transform:rotate(180deg)}}
+.logo__word{display:flex;flex-direction:column;white-space:nowrap;font-family:var(--serif);font-size:23px;font-weight:600;line-height:1;letter-spacing:-.01em}
+.logo__word em{font-style:italic;font-weight:500;color:var(--accent)}
+.logo__word small{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--ink-2);margin-top:5px}
 .top__nav{display:flex;gap:22px;margin-left:auto}
 .top__nav a{text-decoration:none;font-size:15px;color:var(--ink-2)}
 @media (hover:hover){.top__nav a:hover{color:var(--ink)}}
@@ -62,25 +67,27 @@ a:not(.btn){text-underline-offset:.2em;text-decoration-thickness:1px}
 .hero__meta{font-size:16px;color:var(--ink-2);margin:0;max-width:44ch;padding-top:20px;border-top:1px solid var(--line)}
 .hero h1{margin-bottom:.35em}
 .hero__photo{margin:0}
-.hero__photo .scene{aspect-ratio:4/5;border-radius:calc(var(--radius) + 6px);box-shadow:0 30px 60px -30px rgba(31,25,21,.5)}
+/* Motion 1: кадр «проявляется» — шторка из «до» в «после» при загрузке */
+.develop{position:relative;aspect-ratio:4/5;border-radius:calc(var(--radius) + 6px);overflow:hidden;box-shadow:0 30px 60px -30px rgba(31,25,21,.5);background:#2a1d17}
+.develop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.develop__before{filter:brightness(.34) saturate(.5) contrast(.9) hue-rotate(-8deg)}
+.develop__after{clip-path:inset(0 0 0 100%);filter:brightness(1.18) contrast(1.04) saturate(1.08)}
+.develop__line{position:absolute;top:0;bottom:0;left:100%;width:2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.08);opacity:0}
+.develop__tag{position:absolute;top:14px;padding:4px 12px;border-radius:999px;background:rgba(0,0,0,.5);color:#fff;font-size:13px;font-weight:600}
+.develop__tag--l{left:14px}.develop__tag--r{right:14px;opacity:0}
+.develop.is-on .develop__after{animation:develop-wipe 1.6s cubic-bezier(.65,0,.35,1) .5s forwards}
+.develop.is-on .develop__line{animation:develop-line 1.6s cubic-bezier(.65,0,.35,1) .5s forwards}
+.develop.is-on .develop__tag--r{animation:develop-tag .4s ease 1.8s forwards}
+.develop.is-on .develop__tag--l{animation:develop-tag-out .3s ease 1.6s forwards}
+.develop.is-done .develop__after{clip-path:inset(0 0 0 0);animation:none}
+.develop.is-done .develop__line,.develop.is-done .develop__tag--l{display:none}
+.develop.is-done .develop__tag--r{opacity:1;animation:none}
+@keyframes develop-wipe{to{clip-path:inset(0 0 0 0)}}
+@keyframes develop-line{0%{left:100%;opacity:1}90%{opacity:1}100%{left:0;opacity:0}}
+@keyframes develop-tag{to{opacity:1}}
+@keyframes develop-tag-out{to{opacity:0}}
 .hero__photo figcaption{font-size:15px;color:var(--ink-2);margin-top:12px}
 
-/* «Фото» — иллюстрация вечернего кадра (заглушка до реальных фото Дарьи) */
-.scene{position:relative;width:100%;height:100%;overflow:hidden;
-  background:
-    radial-gradient(circle at 18% 22%,rgba(255,206,140,.9) 0 3%,transparent 7%),
-    radial-gradient(circle at 78% 16%,rgba(255,180,120,.8) 0 4%,transparent 9%),
-    radial-gradient(circle at 64% 34%,rgba(255,226,170,.7) 0 2.5%,transparent 6%),
-    radial-gradient(circle at 30% 8%,rgba(255,160,110,.6) 0 3%,transparent 8%),
-    radial-gradient(circle at 44% 58%,rgba(255,236,190,.95) 0 1.6%,rgba(255,190,110,.55) 3%,transparent 12%),
-    radial-gradient(ellipse 4% 9% at 44% 66%,#f4e6d6 0 70%,transparent 72%),
-    radial-gradient(ellipse 36% 9% at 60% 80%,#efe2d3 0 55%,#d9c4ae 56% 62%,transparent 64%),
-    radial-gradient(ellipse 12% 4% at 60% 79%,#9a4b41 0 70%,transparent 72%),
-    radial-gradient(ellipse 7% 16% at 76% 64%,rgba(255,240,220,.35) 0 60%,rgba(255,255,255,.6) 62%,transparent 66%),
-    linear-gradient(180deg,#6d4636 0%,#a8714f 52%,#5a3528 53%,#3f251c 100%)}
-.scene--before{filter:brightness(.36) saturate(.55) contrast(.92) hue-rotate(-8deg)}
-.scene--before::after{content:"";position:absolute;inset:0;opacity:.35;mix-blend-mode:screen;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 
 /* Боли и карточки */
 .pains{background:var(--bg-2)}
@@ -94,7 +101,9 @@ a:not(.btn){text-underline-offset:.2em;text-decoration-thickness:1px}
 /* До/после */
 .compare__in{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
 .ba{position:relative;aspect-ratio:4/3;border-radius:calc(var(--radius) + 6px);overflow:hidden;--pos:50%;touch-action:pan-y;box-shadow:0 30px 60px -30px rgba(31,25,21,.5)}
-.ba > .scene,.ba__before .scene{position:absolute;inset:0}
+.ba__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ba__img--before{filter:brightness(.34) saturate(.5) contrast(.9) hue-rotate(-8deg)}
+.ba__before::after{content:"";position:absolute;inset:0;opacity:.3;mix-blend-mode:screen;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 .ba__before{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
 .ba__handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:#fff;transform:translateX(-1px);pointer-events:none}
 .ba__handle::after{content:"‹ ›";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;font-weight:700;letter-spacing:2px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
@@ -129,7 +138,9 @@ a:not(.btn){text-underline-offset:.2em;text-decoration-thickness:1px}
 /* Автор */
 .author{background:var(--bg-2)}
 .author__in{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
-.author__photo{aspect-ratio:4/5;border-radius:calc(var(--radius) + 6px);background:linear-gradient(160deg,#d9c3b0,#b88e77);display:grid;place-items:center;text-align:center;color:#fff;font-weight:600;font-size:15px}
+.author__photo{position:relative;margin:0;aspect-ratio:4/5;border-radius:calc(var(--radius) + 6px);overflow:hidden;background:#d9c3b0}
+.author__photo img,.author__video img{width:100%;height:100%;object-fit:cover;display:block}
+.author__photo figcaption{position:absolute;left:12px;bottom:12px;padding:4px 10px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;font-size:13px;font-weight:600}
 .author p{color:var(--ink-2);max-width:52ch}
 
 /* Тарифы */
@@ -219,7 +230,11 @@ a:not(.btn){text-underline-offset:.2em;text-decoration-thickness:1px}
 
 /* Автор: медиа и ссылки */
 .author__media{display:grid;gap:16px;max-width:380px}
-.author__video{aspect-ratio:16/9;border-radius:var(--radius);background:linear-gradient(160deg,#3a2c24,#6b4a3b);display:grid;place-items:center;text-align:center;color:#f7f1ea;font-weight:600;font-size:15px;padding:16px}
+.author__video{position:relative;margin:0;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#3a2c24}
+.author__video::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(31,25,21,.75))}
+.author__play{position:absolute;left:50%;top:44%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:rgba(255,255,255,.92);z-index:1;box-shadow:0 10px 24px -10px rgba(0,0,0,.6)}
+.author__play::before{content:"";position:absolute;left:26px;top:20px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent var(--ink)}
+.author__video figcaption{position:absolute;left:16px;right:16px;bottom:12px;z-index:1;color:#fff;font-size:14px;font-weight:600}
 .author__links{font-weight:600}
 .author__links a{color:var(--accent)}
 
@@ -249,6 +264,59 @@ a:not(.btn){text-underline-offset:.2em;text-decoration-thickness:1px}
   .glossary dl{grid-template-columns:1fr;gap:2px}
   .glossary dd{margin-bottom:10px}
 }
+/* Motion 2: шаги обработки загораются по очереди, линия прогресса тянется слева направо */
+.apps__list{position:relative}
+.apps__list[data-reveal]::after{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:#d7998f;transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.65,0,.35,1)}
+.apps__list[data-reveal] li{opacity:.25;transition:opacity .5s ease}
+.apps__list.is-in::after{transform:scaleX(1)}
+.apps__list.is-in li{opacity:1}
+.apps__list.is-in li:nth-child(2){transition-delay:.35s}.apps__list.is-in li:nth-child(3){transition-delay:.7s}.apps__list.is-in li:nth-child(4){transition-delay:1.05s}
+
+/* Motion 3: в самопроверке рисуются галочки */
+.check__list li{position:relative;padding-left:0}
+.check__tick{display:block;width:44px;height:44px;margin-bottom:12px}
+.check__tick circle{fill:none;stroke:var(--line);stroke-width:2}
+.check__tick path{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;transition:stroke-dashoffset .6s cubic-bezier(.16,1,.3,1)}
+.check__list.is-in .check__tick path{stroke-dashoffset:0}
+.check__list.is-in li:nth-child(2) .check__tick path{transition-delay:.35s}
+.check__list.is-in li:nth-child(3) .check__tick path{transition-delay:.7s}
+.check__list li::before{display:none}
+
+/* Первый экран на телефоне: заголовок, текст и обе кнопки — без прокрутки */
+@media (max-width:560px){
+  .hero{padding-top:20px}
+  .hero h1{font-size:clamp(36px,10.4vw,44px);margin-bottom:.3em}
+  .hero .lead{font-size:16.5px;line-height:1.5;margin-bottom:0}
+  .hero__cta{margin:18px 0 20px;gap:10px}
+  .hero__cta .btn{min-height:50px}
+  .top__in{height:60px}
+  .logo__mark{width:38px;height:38px}
+  .logo__word{font-size:21px}
+  section{scroll-margin-top:60px}
+}
+@media (max-width:360px){
+  .hero h1{font-size:34px}
+  .logo__word small{display:none}
+}
+/* Телефон горизонтально: две колонки, фото справа */
+@media (max-height:500px) and (orientation:landscape){
+  .hero{padding-top:16px}
+  .hero__in{grid-template-columns:1.2fr .8fr;gap:28px}
+  .hero h1{font-size:34px}
+  .hero .lead{font-size:15px}
+  .hero__cta{margin:12px 0}
+  .hero__meta{display:none}
+  .develop{aspect-ratio:4/3}
+  .hero__photo figcaption{display:none}
+  .top__nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .develop__after{clip-path:none}
+  .develop.is-on .develop__after,.develop.is-on .develop__line,.develop.is-on .develop__tag--r,.develop.is-on .develop__tag--l{animation:none}
+  .develop__tag--l{display:none}.develop__tag--r{opacity:1}
+  .apps__list[data-reveal] li{opacity:1}.apps__list[data-reveal]::after{transform:none}
+  .check__tick path{stroke-dashoffset:0}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 /* Экскурсия по странице (демо) */
@@ -267,7 +335,8 @@ a:not(.btn){text-underline-offset:.2em;text-decoration-thickness:1px}
 .tour__btn--ghost{background:transparent;color:var(--ink)}
 .tour__btn:disabled{opacity:.35;cursor:default}
 @media (max-width:560px){
-  .tour-launch{bottom:84px}
+  .tour-launch{top:12px;bottom:auto;right:12px;min-height:44px;padding:0 14px;font-size:13px}
+  .tour-launch__more{display:none}
   .tour__box{left:16px;right:16px;bottom:16px;width:auto;padding:16px 18px}
   .tour__title{font-size:22px}
   .tour__text{font-size:15px}

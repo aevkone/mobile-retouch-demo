@@ -46,3 +46,26 @@ document.querySelectorAll('[data-offer]').forEach(btn => {
     alert('Демо-версия: здесь откроется оплата в GetCourse (карта, СБП, рассрочка).');
   });
 });
+
+// Motion 1: кадр на первом экране «проявляется» сразу после загрузки
+const develop = document.getElementById('develop');
+if (develop) {
+  develop.classList.add('is-on');
+  // конечное состояние фиксируем классом: так кадр останется «после», даже если анимация не доиграла
+  const done = () => develop.classList.add('is-done');
+  develop.addEventListener('animationend', e => { if (e.target.classList.contains('develop__after')) done(); });
+  setTimeout(done, 2400);
+}
+
+// Motion 2 и 3: шаги приложений и галочки самопроверки запускаются, когда блок появился на экране
+const reveals = document.querySelectorAll('[data-reveal]');
+if ('IntersectionObserver' in window) {
+  const ro = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('is-in');
+    ro.unobserve(e.target);
+  }), { threshold: .35 });
+  reveals.forEach(el => ro.observe(el));
+} else {
+  reveals.forEach(el => el.classList.add('is-in'));
+}

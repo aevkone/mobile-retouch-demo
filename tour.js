@@ -104,7 +104,7 @@ const TOUR_STEPS = [
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'tour-launch';
-    btn.textContent = 'Экскурсия по странице';
+    btn.innerHTML = 'Экскурсия<span class="tour-launch__more"> по странице</span>';
     btn.addEventListener('click', start);
     document.body.appendChild(btn);
   }
